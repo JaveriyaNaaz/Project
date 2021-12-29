@@ -1,0 +1,111 @@
+package com.mphasis.vehicleRentalSystem.domain;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="UserDetails")
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name = "UserId", nullable = false)
+	private int userId;
+    @Column(name = "UserName", length = 30)
+	private String userName;
+	@Column(name="Password", length=10)
+	private String password;
+	@Column(name="Email", length=40)
+	private String email;
+	@Column(name="Contact", scale=10)
+	private long contact;
+	@Column(name="Address", length=40)
+	private String address;
+	@Column(name="AdharId" ,length=20)
+	private String adharId;
+	@Column(name="DrivingLicense", length=20)
+	private String drivingLicense;
+	public User() {
+		
+	}
+	
+	public User(int userId, String userName, String password, String email, long contact, String address, String adharId,
+			String drivingLicense) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.contact = contact;
+		this.address = address;
+		this.adharId = adharId;
+		this.drivingLicense = drivingLicense;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password= password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public long getContact() {
+		return contact;
+	}
+
+	public void setContact(long contact) {
+		this.contact = contact;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getAdharId() {
+		return adharId;
+	}
+
+	public void setAdharId(String adharId) {
+		this.adharId = adharId;
+	}
+
+	public String getDrivingLicense() {
+		return drivingLicense;
+	}
+
+	public void setDrivingLicense(String drivingLicense) {
+		this.drivingLicense = drivingLicense;
+	}
+	
+}
