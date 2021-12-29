@@ -1,0 +1,83 @@
+package com.mphasis.vehicleRentalSystem.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+import com.mphasis.vehicleRentalSystem.domain.User;
+import com.mphasis.vehicleRentalSystem.exception.ResourceNotFoundException;
+import com.mphasis.vehicleRentalSystem.service.UserService;
+
+
+
+
+//@CrossOrigin(origins="http://localhost:4200")
+@RestController
+@RequestMapping("/api/v2")
+public class UserController {
+	  @Autowired
+	  UserService userService;
+	  
+	  @GetMapping("/getAllUsers")
+	  public List<User> getUsers() {
+			List<User> userList = userService.fetchUsers();
+
+			return userList;
+
+		}
+
+	    
+	  @GetMapping("/getUser/{userId}")
+		public ResponseEntity<User> getUserById(@PathVariable("userId") int userId)
+				throws ResourceNotFoundException {
+			User user = userService.getUser(userId);
+			return ResponseEntity.ok().body(user);
+		}
+	  
+	  @PostMapping("/saveUsers")
+	  public User addUser(@RequestBody User user) {
+
+			User users = userService.saveUser(user);
+
+			// return new ResponseEntity<>("Employee added successsfully", HttpStatus.OK);
+			return users;
+	    }
+	  @PutMapping("/updateUser/{userId}")
+		public ResponseEntity<User> updateEmployee(@PathVariable("userId") int userId,
+				@RequestBody User userDetails) throws ResourceNotFoundException {
+			User user = userService.getUser(userId);
+
+			user.setUserName(userDetails.getUserName());
+			user.setPassword(userDetails.getPassword());
+			user.setEmail(userDetails.getEmail());
+			user.setContact(userDetails.getContact());
+			user.setAddress(userDetails.getAddress());
+			user.setAdharId(userDetails.getAdharId());
+			user.setDrivingLicense(userDetails.getDrivingLicense());
+			final User updatedUser = userService.saveUser(user);
+			return ResponseEntity.ok(updatedUser);
+		}
+	  @DeleteMapping(value = "/deleteUser/{userId}")
+		public ResponseEntity<Object> deleteUser(@PathVariable("userId") int userId) {
+
+			userService.deleteUser(userId);
+			return new ResponseEntity<>("User deleted successsfully", HttpStatus.OK);
+		}
+
+}
